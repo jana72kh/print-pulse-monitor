@@ -32,13 +32,13 @@ export default function PrintStatusCard({
   const getStatusIcon = () => {
     switch (status) {
       case 'printing':
-        return <Play className="h-5 w-5 text-printer-printing" />;
+        return <Play className="h-5 w-5 text-orange-500" />;
       case 'paused':
-        return <Pause className="h-5 w-5 text-printer-paused" />;
+        return <Pause className="h-5 w-5 text-yellow-500" />;
       case 'error':
-        return <AlertCircle className="h-5 w-5 text-printer-error" />;
+        return <AlertCircle className="h-5 w-5 text-red-500" />;
       case 'idle':
-        return <CheckCircle className="h-5 w-5 text-printer-idle" />;
+        return <CheckCircle className="h-5 w-5 text-green-500" />;
     }
   };
   
@@ -51,19 +51,16 @@ export default function PrintStatusCard({
       case 'error':
         return "Error";
       case 'idle':
-        return "Idle";
+        return "Ready";
     }
   };
 
   return (
     <Card className={cn("overflow-hidden", className)}>
-      <CardHeader className={cn(
-        "bg-card/50 p-4",
-        `border-l-4 border-l-printer-${status}`
-      )}>
-        <CardTitle className="flex items-center text-lg font-medium">
+      <CardHeader className="bg-gray-800/50 p-3">
+        <CardTitle className="flex items-center text-base font-medium">
           <span className="mr-2">{getStatusIcon()}</span>
-          Printer Status: {getStatusText()}
+          Status: {getStatusText()}
         </CardTitle>
       </CardHeader>
       <CardContent className="p-4 space-y-4">
@@ -71,21 +68,21 @@ export default function PrintStatusCard({
           <>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Progress</span>
+                <span className="text-sm text-gray-400">Progress</span>
                 <span className="text-sm font-medium">{Math.round(progress)}%</span>
               </div>
-              <Progress value={progress} className="h-2" />
+              <Progress value={progress} className="h-2 bg-gray-700" indicatorClassName="bg-orange-500" />
             </div>
             
             <div className="flex flex-col space-y-1">
               {fileName && (
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">File</span>
+                  <span className="text-sm text-gray-400">File</span>
                   <span className="text-sm font-medium truncate max-w-[200px]">{fileName}</span>
                 </div>
               )}
               <div className="flex justify-between items-center">
-                <span className="text-sm text-muted-foreground flex items-center">
+                <span className="text-sm text-gray-400 flex items-center">
                   <Clock className="h-4 w-4 mr-1" /> Print Time
                 </span>
                 <span className="text-sm font-medium">{formatTime(printTime)}</span>
@@ -93,11 +90,11 @@ export default function PrintStatusCard({
             </div>
           </>
         ) : status === 'error' ? (
-          <div className="py-2 px-3 bg-destructive/10 text-destructive rounded-md text-sm">
+          <div className="py-2 px-3 bg-red-900/20 text-red-400 rounded-md text-sm">
             Printer error! Please check the printer and reset.
           </div>
         ) : (
-          <div className="py-2 text-muted-foreground text-sm">
+          <div className="py-2 text-gray-400 text-sm">
             Printer is ready. Start a new print job.
           </div>
         )}

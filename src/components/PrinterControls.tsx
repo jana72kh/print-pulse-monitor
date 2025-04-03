@@ -16,14 +16,14 @@ export default function PrinterControls({ className }: PrinterControlsProps) {
   
   return (
     <Card className={cn(className)}>
-      <CardHeader className="bg-card/50 p-4">
-        <CardTitle className="text-lg font-medium">Printer Controls</CardTitle>
+      <CardHeader className="bg-gray-800/50 p-3">
+        <CardTitle className="text-base font-medium">Printer Controls</CardTitle>
       </CardHeader>
       <CardContent className="p-4">
         <div className="flex flex-wrap gap-3">
           <Button
             variant="outline"
-            className="flex-1 gap-2"
+            className="flex-1 gap-2 bg-gray-800 text-white border-gray-700 hover:bg-gray-700"
             disabled={status === 'printing' || status === 'error'}
             onClick={controls.startPrint}
           >
@@ -34,7 +34,7 @@ export default function PrinterControls({ className }: PrinterControlsProps) {
           {status === 'printing' ? (
             <Button
               variant="outline"
-              className="flex-1 gap-2"
+              className="flex-1 gap-2 bg-gray-800 text-white border-gray-700 hover:bg-gray-700"
               onClick={controls.pausePrint}
             >
               <Pause className="h-4 w-4 text-yellow-500" />
@@ -43,7 +43,7 @@ export default function PrinterControls({ className }: PrinterControlsProps) {
           ) : status === 'paused' ? (
             <Button
               variant="outline"
-              className="flex-1 gap-2"
+              className="flex-1 gap-2 bg-gray-800 text-white border-gray-700 hover:bg-gray-700"
               onClick={controls.resumePrint}
             >
               <Play className="h-4 w-4 text-green-500" />
@@ -53,7 +53,7 @@ export default function PrinterControls({ className }: PrinterControlsProps) {
           
           <Button
             variant="outline"
-            className="flex-1 gap-2"
+            className="flex-1 gap-2 bg-gray-800 text-white border-gray-700 hover:bg-gray-700"
             disabled={status !== 'printing' && status !== 'paused'}
             onClick={controls.stopPrint}
           >
@@ -64,7 +64,7 @@ export default function PrinterControls({ className }: PrinterControlsProps) {
           {status === 'error' ? (
             <Button
               variant="outline"
-              className="flex-1 gap-2"
+              className="flex-1 gap-2 bg-gray-800 text-white border-gray-700 hover:bg-gray-700"
               onClick={controls.resetError}
             >
               <Loader className="h-4 w-4 text-blue-500" />
@@ -73,7 +73,7 @@ export default function PrinterControls({ className }: PrinterControlsProps) {
           ) : (
             <Button
               variant="outline"
-              className="flex-1 gap-2"
+              className="flex-1 gap-2 bg-gray-800 text-white border-gray-700 hover:bg-gray-700"
               onClick={controls.simulateError}
             >
               <AlertCircle className="h-4 w-4 text-red-500" />

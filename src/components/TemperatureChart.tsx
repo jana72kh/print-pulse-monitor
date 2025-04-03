@@ -5,7 +5,12 @@ import { usePrinterTemperatureHistory } from "@/hooks/use-printer-data";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { useMemo } from "react";
 
-export default function TemperatureChart() {
+interface TemperatureChartProps {
+  compact?: boolean;
+  className?: string;
+}
+
+export default function TemperatureChart({ compact = false, className }: TemperatureChartProps) {
   const temperatureHistory = usePrinterTemperatureHistory();
   
   // Process data for chart display - downsample to improve performance
@@ -22,11 +27,69 @@ export default function TemperatureChart() {
         time: new Date(point.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
         extruderTemp: point.extruderTemp,
         bedTemp: point.bedTemp,
+        piTemp: 44 + (Math.random() * 0.5 - 0.25) // Simulated Pi temperature around 44°C
       }));
   }, [temperatureHistory]);
 
+  // Compact view similar to the reference image
+  if (compact) {
+    return (
+      <div className="h-[150px] w-full mt-4 border border-gray-800 bg-black/50 rounded">
+        {chartData.length > 0 ? (
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              data={chartData}
+              margin={{ top: 10, right: 10, left: 0, bottom: 10 }}
+            >
+              <XAxis 
+                dataKey="time"
+                tick={{ fill: '#6b7280', fontSize: 10 }}
+                tickLine={{ stroke: '#374151' }}
+                axisLine={{ stroke: '#374151' }}
+              />
+              <YAxis 
+                tick={{ fill: '#6b7280', fontSize: 10 }}
+                tickLine={{ stroke: '#374151' }}
+                axisLine={{ stroke: '#374151' }}
+                domain={[0, 60]}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="extruderTemp" 
+                name="Extruder"
+                stroke="#f97316" 
+                dot={false}
+                strokeWidth={2}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="bedTemp" 
+                name="Bed"
+                stroke="#06b6d4" 
+                dot={false}
+                strokeWidth={2}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="piTemp" 
+                name="Pi"
+                stroke="#ec4899" 
+                dot={false}
+                strokeWidth={2}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="flex h-full items-center justify-center text-gray-500 text-sm">
+            No temperature data available yet
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
-    <Card className="col-span-full">
+    <Card className={className || "col-span-full"}>
       <CardHeader className="bg-card/50 p-4">
         <CardTitle className="text-lg font-medium">Temperature History</CardTitle>
       </CardHeader>
@@ -58,7 +121,7 @@ export default function TemperatureChart() {
                   type="monotone" 
                   dataKey="extruderTemp" 
                   name="Extruder"
-                  stroke="#8B5CF6" 
+                  stroke="#f97316" 
                   dot={false}
                   strokeWidth={2}
                   activeDot={{ r: 4 }} 
@@ -67,7 +130,16 @@ export default function TemperatureChart() {
                   type="monotone" 
                   dataKey="bedTemp" 
                   name="Bed"
-                  stroke="#0EA5E9" 
+                  stroke="#06b6d4" 
+                  dot={false}
+                  strokeWidth={2}
+                  activeDot={{ r: 4 }} 
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="piTemp" 
+                  name="Pi"
+                  stroke="#ec4899" 
                   dot={false}
                   strokeWidth={2}
                   activeDot={{ r: 4 }} 
