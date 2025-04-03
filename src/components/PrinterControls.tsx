@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PrinterStatus } from "@/types/printer";
-import { Play, Pause, Stop, AlertCircle, Loader } from "lucide-react";
+import { Play, Pause, Square, AlertCircle, Loader } from "lucide-react";
 import { usePrinterData } from "@/hooks/use-printer-data";
 import { cn } from "@/lib/utils";
 
@@ -57,7 +57,7 @@ export default function PrinterControls({ className }: PrinterControlsProps) {
             disabled={status !== 'printing' && status !== 'paused'}
             onClick={controls.stopPrint}
           >
-            <Stop className="h-4 w-4 text-red-500" />
+            <Square className="h-4 w-4 text-red-500" />
             Stop Print
           </Button>
           
