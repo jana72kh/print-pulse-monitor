@@ -71,7 +71,7 @@ export default function PrintStatusCard({
                 <span className="text-sm text-gray-400">Progress</span>
                 <span className="text-sm font-medium">{Math.round(progress)}%</span>
               </div>
-              <Progress value={progress} className="h-2 bg-gray-700" indicatorClassName="bg-orange-500" />
+              <Progress value={progress} className="h-2 bg-gray-700" />
             </div>
             
             <div className="flex flex-col space-y-1">

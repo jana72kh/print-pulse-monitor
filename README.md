@@ -1,73 +1,121 @@
-# Welcome to your Lovable project
 
-## Project info
+# 3D Printer Monitoring Dashboard
 
-**URL**: https://lovable.dev/projects/25d2aed5-ffe3-4d8f-8c94-c7feb976b6de
+A real-time web-based dashboard for monitoring and controlling a 3D printer. This project uses a simulated backend to generate realistic printer data, providing a fully interactive experience without requiring actual hardware.
 
-## How can I edit this code?
+![Dashboard Preview](https://place-hold.it/800x450/000/fff&text=3D%20Printer%20Dashboard)
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+- **Real-time monitoring** of extruder and bed temperatures
+- **Print job progress tracking** with percentage and elapsed time
+- **Interactive printer controls** (Start, Pause/Resume, Stop)
+- **Error simulation and recovery**
+- **Temperature history graph** showing changes over time
+- **Responsive design** that works on desktop and mobile devices
+- **Dark theme interface** optimized for workshop environments
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/25d2aed5-ffe3-4d8f-8c94-c7feb976b6de) and start prompting.
+## Setup Instructions
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js (v16 or later recommended)
+- npm or bun
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Clone the repository:
+   ```sh
+   git clone <repository-url>
+   cd 3d-printer-dashboard
+   ```
 
-Follow these steps:
+2. Install dependencies:
+   ```sh
+   npm install
+   # or
+   bun install
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+3. Start the development server:
+   ```sh
+   npm run dev
+   # or
+   bun run dev
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+4. Open your browser and navigate to `http://localhost:8080`
 
-# Step 3: Install the necessary dependencies.
-npm i
+## Usage
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+The dashboard provides a simulated 3D printer interface with the following controls:
 
-**Edit a file directly in GitHub**
+- **Start Print**: Begins a simulated print job with randomized temperature targets
+- **Pause/Resume**: Toggles between pausing and resuming an active print job
+- **Stop Print**: Cancels the current print job
+- **Simulate Error/Reset Error**: Toggles between error state and resetting to normal operation
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The temperature graph displays the history of both extruder and bed temperatures over time.
 
-**Use GitHub Codespaces**
+## Design Decisions
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Technology Stack
 
-## What technologies are used for this project?
+- **React + TypeScript**: For building a robust, type-safe UI
+- **Tailwind CSS**: For responsive, utility-first styling
+- **shadcn/ui**: For consistent, accessible UI components
+- **recharts**: For interactive, real-time data visualization
+- **Lucide Icons**: For clean, consistent iconography
 
-This project is built with:
+### Architecture Decisions
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+1. **Singleton Simulator**: The printer simulator is implemented as a singleton service that maintains state and broadcasts updates to subscribers, mimicking a real device API.
 
-## How can I deploy this project?
+2. **Reactive UI**: Components subscribe to data changes and update automatically, ensuring real-time UI updates without additional user actions.
 
-Simply open [Lovable](https://lovable.dev/projects/25d2aed5-ffe3-4d8f-8c94-c7feb976b6de) and click on Share -> Publish.
+3. **Dark Theme**: The interface uses a dark theme to reduce eye strain in workshop environments where 3D printers are typically used.
 
-## Can I connect a custom domain to my Lovable project?
+4. **Compact Layout**: The dashboard prioritizes essential information while maintaining access to controls, optimizing for at-a-glance monitoring.
 
-Yes it is!
+### Data Simulation
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- Temperature simulation includes realistic heating and cooling curves
+- Random fluctuations around target temperatures mimic real-world behavior
+- Print progress advances at variable rates to simulate different parts of the printing process
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Challenges and Solutions
+
+### Challenge: Realistic Data Simulation
+
+**Problem**: Creating realistic temperature data that mimics actual 3D printer behavior.
+
+**Solution**: Implemented temperature simulation with variable heating/cooling rates and small random fluctuations around target values. This creates more realistic temperature curves compared to linear changes.
+
+### Challenge: Responsive Design for Various Screen Sizes
+
+**Problem**: Creating an interface that works well on both desktop monitors and mobile devices.
+
+**Solution**: Used a responsive grid layout with Tailwind CSS that adjusts breakpoints for different screen sizes. Components reorganize from a side-by-side layout on desktop to a stacked layout on mobile.
+
+### Challenge: Real-time Updates Without Performance Issues
+
+**Problem**: Updating the UI in real-time without causing performance bottlenecks.
+
+**Solution**: Implemented an efficient subscription model where components only re-render when relevant data changes. The temperature history is also limited to a fixed number of data points to prevent memory issues.
+
+## Future Improvements
+
+- Add file upload capability for simulating specific print jobs
+- Implement print time estimation based on progress
+- Add camera view simulation
+- Create printer profiles to simulate different printer models
+- Add network latency simulation for more realistic remote monitoring
+
+## License
+
+[MIT License](LICENSE)
+
+## Acknowledgments
+
+- Inspired by actual 3D printer interfaces like OctoPrint and Prusa Connect
+- Design pattern influenced by modern IoT dashboards
